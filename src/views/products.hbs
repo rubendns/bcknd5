@@ -1,0 +1,78 @@
+<div >
+  <div class="row">
+    <div >
+      <div >
+        <img
+          src="https://www.pngall.com/wp-content/uploads/5/Profile-PNG-Images.png"
+          alt="Imagen de perfil"
+        />
+      </div>
+    </div>
+    <div >
+      <div >
+        {{#if user}}
+          <h1>Bienvenido {{user.name}}</h1>
+        {{else}}
+          <h1>Bienvenido Invitado</h1>
+        {{/if}}
+        <h2>Permisos: {{user.rol}}</h2>
+        <form action="/api/sessions/logout" method="post">
+          <input type="submit" value="Logout" class="btn btn-danger" />
+        </form>
+      </div>
+    </div>
+  </div>
+  <div >
+    {{#each products.docs}}
+      <div >
+        <div >
+          <img src="{{thumbnails}}" class="card-img-top" alt="Product Image" />
+          <div >
+            <h5 >{{title}}</h5>
+            <p >{{description}}</p>
+          </div>
+          <ul >
+            <li class="list-group-item">Code: {{code}}</li>
+            <li class="list-group-item">Price: ${{price}}</li>
+            <li class="list-group-item">Stock: {{stock}}</li>
+            <li class="list-group-item">Category: {{category}}</li>
+          </ul>
+          <div >
+            {{#each thumbnails}}
+              <img
+                src="{{this}}"
+                alt="Thumbnail"
+                width="40"
+                height="40"
+                style="margin-right: 5px;"
+              />
+            {{/each}}
+          </div>
+          <button type="button" >Add to cart</button>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>
+<div >
+  <nav >
+    <ul >
+      {{#if products.hasPrevPage}}
+        <li class="page-item"><a
+            class="page-link"
+            href="/products?page={{products.prevPage}}"
+          >Previous</a></li>
+      {{/if}}
+      <li class="page-item"><a
+          class="page-link"
+          href="#"
+        >{{products.page}}</a></li>
+      {{#if products.hasNextPage}}
+        <li class="page-item"><a
+            class="page-link"
+            href="/products?page={{products.nextPage}}"
+          >Next</a></li>
+      {{/if}}
+    </ul>
+  </nav>
+</div>
