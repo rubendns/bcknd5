@@ -2,14 +2,6 @@
   <div class="row">
     <div >
       <div >
-        <img
-          src="https://www.pngall.com/wp-content/uploads/5/Profile-PNG-Images.png"
-          alt="Imagen de perfil"
-        />
-      </div>
-    </div>
-    <div >
-      <div >
         {{#if user}}
           <h1>Bienvenido {{user.name}}</h1>
         {{else}}
@@ -17,7 +9,7 @@
         {{/if}}
         <h2>Permisos: {{user.rol}}</h2>
         <form action="/api/sessions/logout" method="post">
-          <input type="submit" value="Logout" class="btn btn-danger" />
+          <input type="submit" value="Logout" class="btn btn-primary" />
         </form>
       </div>
     </div>
@@ -26,7 +18,7 @@
     {{#each products.docs}}
       <div >
         <div >
-          <img src="{{thumbnails}}" class="card-img-top" alt="Product Image" />
+          <img src="{{thumbnails}}" alt="Product Image" />
           <div >
             <h5 >{{title}}</h5>
             <p >{{description}}</p>
@@ -48,7 +40,7 @@
               />
             {{/each}}
           </div>
-          <button type="button" >Add to cart</button>
+          <button type="button" class="btn btn-secondary" >Add to cart</button>
         </div>
       </div>
     {{/each}}
