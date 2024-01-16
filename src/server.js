@@ -20,12 +20,19 @@ const httpServer = app.listen(PORT, () => {
   `Server listening on port ${PORT}`;
 });
 
-const MONGO_URL =
-  "mongodb://127.0.0.1:27017/ecommerce?retryWrites=true&w=majority";
+const mongoDBConnection = mongoose.connect(`mongodb+srv://rubendns:UZLxn4iAGvcRngUY@cluster0.6lu3kn4.mongodb.net/?retryWrites=true&w=majority`)
+  .then(() => {
+    console.log("MongoDB Atlas connected!");
+  })
+  .catch((error) => {
+    console.error("MongoDB Atlas connection error:", error);
+  });
+
+mongoDBConnection;
 
 app.use(
   session({
-    store: MongoStore.create({ mongoUrl: MONGO_URL }),
+    store: MongoStore.create({ mongoUrl: `mongodb+srv://rubendns:UZLxn4iAGvcRngUY@cluster0.6lu3kn4.mongodb.net/?retryWrites=true&w=majority` }),
     mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
     ttl: 10 * 60,
     secret: "c0d1g0",
@@ -33,26 +40,6 @@ app.use(
     saveUninitialized: true,
   })
 );
-
-const connectMondoDB = async () => {
-  try {
-    await mongoose.connect(MONGO_URL);
-    console.log("Successfully connected to the DB using Mongoose");
-  } catch (error) {
-    console.error("Could not connect to the DB using Mongoose: " + error);
-    process.exit();
-  }
-};
-
-mongoose.connection.on("connected", () => {
-  console.log("Mongoose connected to database");
-});
-
-mongoose.connection.on("error", (err) => {
-  console.error("Mongoose connection error: " + err);
-});
-
-connectMondoDB();
 
 const io = new Server(httpServer);
 
