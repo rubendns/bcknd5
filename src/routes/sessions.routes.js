@@ -39,7 +39,7 @@ router.post("/login", async (req, res) => {
       name: "Admin",
       email: "adminCoder@coder.com",
       rol: "admin",
-      age: 0,  // Puedes establecer la edad como desees
+      age: 0,
     };
 
     return res.send({
