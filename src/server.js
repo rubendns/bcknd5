@@ -17,7 +17,7 @@ import MongoStore from "connect-mongo";
 const app = express();
 const PORT = 8080;
 const httpServer = app.listen(PORT, () => {
-  `Server listening on port ${PORT}`;
+  console.log(`Server listening on port ${PORT}`);
 });
 
 const mongoDBConnection = mongoose.connect(`mongodb+srv://rubendns:UZLxn4iAGvcRngUY@cluster0.6lu3kn4.mongodb.net/?retryWrites=true&w=majority`)

@@ -5,6 +5,12 @@ import userModel from "../dao/models/user.model.js";
 
 const viewsRouter = Router();
 
+viewsRouter.get("/", (req, res) => {
+  res.render("login", {
+    title: "Login",
+  });
+});
+
 viewsRouter.get("/productManager", async (req, res) => {
   const products = await productsDao.getAllProducts();
   res.render("productManager", {

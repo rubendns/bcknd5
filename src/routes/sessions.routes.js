@@ -32,38 +32,49 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
+
+  if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
+    req.session.rol = "admin";
+    req.session.user = {
+      name: "Admin",
+      email: "adminCoder@coder.com",
+      rol: "admin",
+      age: 0,  // Puedes establecer la edad como desees
+    };
+
+    return res.send({
+      status: "success",
+      payload: req.session.user,
+      message: "Admin login done :)",
+    });
+  }
+
   const user = await userModel.findOne({ email, password });
-  if (!user)
+
+  if (!user) {
     return res
       .status(401)
       .send({ status: "error", error: "Incorrect credentials" });
-
-  if (email != "adminCoder@coder.com" || password !== "adminCod3r123") {
-    (req.session.rol = "user"),
-      (req.session.user = {
-        name: `${user.first_name} ${user.last_name}`,
-        email: user.email,
-        rol: req.session.rol,
-        age: user.age,
-      });
-  } else {
-    (req.session.rol = "admin"),
-      (req.session.user = {
-        name: `${user.first_name} ${user.last_name}`,
-        email: user.email,
-        rol: req.session.rol,
-        age: user.age,
-      });
   }
+
+  req.session.rol = "user";
+  req.session.user = {
+    name: `${user.first_name} ${user.last_name}`,
+    email: user.email,
+    rol: req.session.rol,
+    age: user.age,
+  };
 
   res.send({
     status: "success",
     payload: req.session.user,
-    message: "First login done :)",
+    message: "User login done :)",
   });
 });
 
+
 router.post("/logout", (req, res) => {
+  const userName = req.session.user ? req.session.user.name : "Unknown User";
   req.session.destroy((err) => {
     if (err) {
       console.error("Logout error:", err);
@@ -71,6 +82,7 @@ router.post("/logout", (req, res) => {
         .status(500)
         .send({ status: "error", msg: "Internal Server Error" });
     }
+    console.log(`User ${userName} logged out successfully.`);
     res.redirect("/users/login");
   });
 });
